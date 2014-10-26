@@ -4,6 +4,7 @@
 <head>
 <title>Simple Web Speech Recognition Example</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="speakClient.js"></script>
 <style>
     body {
         font-family: Helvetica, sans-serif;
@@ -44,6 +45,7 @@
 
 <body>
 
+<div id="audio"></div>
 <p>&nbsp;</p>
 
 
@@ -62,9 +64,9 @@
     var recognizing = false;
 
     var language = 'en-GB';  // change this to your language
+    
 
     $(document).ready(function() {
-    
 
         // check that your browser supports the API
         if (!('webkitSpeechRecognition' in window)) {
@@ -106,18 +108,24 @@
                     }
                 }
 
+				
                 console.log("interim:  " + interim_transcript);
                 console.log("final:    " + final_transcript);
                 // update the web page
                 if(final_transcript.length > 0) {
+                
+                	//This is the call to speak.js with the final transcript.					
+                	speak(final_transcript);
+                	                
                     $('#transcript').html(doStuff(final_transcript));
                 }
             };
 
 
+
             $("#start_button").click(function(e) {
                 e.preventDefault();
-
+                
                 if (recognizing) {
                     recognition.stop();
                     $('#start_button').html('Click to Start Again');
@@ -143,6 +151,7 @@
 		
 		return text.toUpperCase();
 	};
+      
 	
 </script>
 
